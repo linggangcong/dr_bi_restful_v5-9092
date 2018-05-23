@@ -1,4 +1,5 @@
-package redshift;
+/*
+package com.spring.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,7 +15,7 @@ public class ReadRedshift {
 //    public static void main(String[] args){
 //        readSql("select * from dim_product","ba_model");
 //    }
-    public static void readSql(String sql_repeat,String database) {
+    public static void readSql(String sql_repeat,String database) {  //sql语句 ， 数据库
 
         Connection connection;
         String redshiftUrl = "jdbc:redshift://drdb.cdyiy7yjsffb.cn-north-1.redshift.amazonaws.com.cn:5439/"+database;
@@ -55,6 +56,7 @@ public class ReadRedshift {
         }
     }
 
+
     public static void strShell(String shpath){
         try {
 //            String shpath="ls /";
@@ -75,4 +77,4 @@ public class ReadRedshift {
             e.printStackTrace();
         }
     }
-}
+}*/
