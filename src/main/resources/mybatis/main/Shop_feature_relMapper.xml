@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.Shop_feature_relMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.Shop_feature_rel">
+        <id column="shop_id" property="shopId" />
+        <result column="shop_type_id" property="shopTypeId" />
+        <result column="data_source" property="dataSource" />
+        <result column="cre_user" property="creUser" />
+        <result column="cre_date" property="creDate" />
+        <result column="upd_user" property="updUser" />
+        <result column="upd_date" property="updDate" />
+    </resultMap>
+
+    <insert id="addShop_feature_rel"  parameterType="com.spring.model.Shop_feature_rel" >
+
+        insert into  dim_shop_feature_rel (shop_id,shop_type_id,data_source,cre_date,cre_user)
+                                    values(#{shopId},#{shopTypeId},#{dataSource},CURRENT_TIMESTAMP (),#{creUser});
+    </insert>
+
+    <update id="updateShop_feature_rel" parameterType="com.spring.model.Shop_feature_rel" >
+        update dim_shop_feature_rel set shop_type_id=#{shopTypeId},data_source=#{dataSource}
+        where shop_id=#{shopId}
+    </update>
+
+    <delete id="deleteShop_feature_relByName" >
+        delete from dim_shop_feature_rel where shop_id=#{shopId}
+    </delete>
+
+    <select id="findShop_feature_relByName" resultMap="baseSelectMap">
+        select * from dim_shop_feature_rel where shop_id=#{shopId}
+    </select>
+</mapper>

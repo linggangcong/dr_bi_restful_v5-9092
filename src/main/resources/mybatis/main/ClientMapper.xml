@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.ClientMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.Client">
+        <id column="client_id" property="id" />
+        <result column="role" property="role" />
+        <result column="client_name" property="name" />
+        <result column="pass_word" property="password" />
+        <result column="phonenumber" property="phoneNum" />
+        <result column="company_name" property="companyName" />
+        <result column="industry" property="industry" />
+        <!--<result column="headshot_image" property="headshot"  jdbcType="BLOB"  typeHandler="com.spring.model.ConvertBlobTypeHandler" />-->
+        <result column="headshot_image" property="headshot"  />
+        <result column="gender" property="gender" />
+        <result column="email_address" property="emailAddress" />
+        <result column="banner_code" property="bannerCode" />
+        <result column="idy" property="idy" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date"  property="endDate"/>
+        <result column="data_date_start" property="startDataDate" />
+        <result column="data_date_end"  property="endDataDate"/>
+
+        <!--<result column="start_date" jdbcType="DATE" property="startDate" javaType="java.util.Date" />-->
+        <!--<result column="end_date" jdbcType="DATE" property="startDate" javaType="java.util.Date" />-->
+        <!--<result column="data_date_start" jdbcType="DATE" property="startDataDate" javaType="java.util.Date" />-->
+        <!--<result column="data_date_end" jdbcType="DATE" property="endDataDate" javaType="java.util.Date" />-->
+    </resultMap>
+
+    <resultMap id="secMap" type="com.spring.model.Client">
+        <id column="client_id" property="id" />
+        <result column="banner_code" property="bannerCode" />
+        <result column="idy" property="idy" />
+        <result column="data_date_start" property="startDataDate" />
+        <result column="data_date_end" property="endDataDate" />
+    </resultMap>
+
+    <!--2018180517 管理接口-->
+    <!--<insert id="addClient"   >-->
+        <!--insert into  dim_client (client_id,idy,banner_code,client_name,company_name,pass_word,start_date,end_date,data_date_start,data_date_start)-->
+        <!--values(#{0},#{1},#{2},#{3},#{4},#{5},#{6},#{7},#{8},#{9})-->
+    <!--</insert>-->
+    <insert id="addClient"   >
+        insert into  dim_client (client_id,role,phonenumber,industry,headshot_image,gender,email_address,idy,banner_code,client_name,company_name,pass_word,start_date,end_date,data_date_start,data_date_end)
+        values(#{id},#{role},#{phoneNum},#{industry},#{headshot},#{gender},#{emailAddress},#{idy},#{bannerCode},#{name},#{companyName},#{password},#{startDate},#{endDate},#{startDataDate},#{endDataDate})
+    </insert>
+
+    <!--<update id="updateClient"  >-->
+        <!--update dim_client set  client_id=#{0},idy=#{1}, banner_code=#{2}, company_name=#{4},pass_word=#{5},-->
+        <!--start_date=#{6},end_date=#{7}, data_date_start=#{8}, data_date_start=#{9}-->
+        <!--where client_name=#{3}-->
+    <!--</update>-->
+
+    <update id="updateClient" parameterType="com.spring.model.Client"  >
+        update dim_client set  client_id=#{id},idy=#{idy}, banner_code=#{bannerCode}, company_name=#{companyName},pass_word=#{password},
+        start_date=#{startDate},end_date=#{endDate}, data_date_start=#{startDataDate}, data_date_end=#{endDataDate}
+        where client_name=#{name}
+    </update>
+    <delete id="deleteClientByName" >
+        delete from dim_client where client_id=#{id}
+    </delete>
+    <select id="findClientById" resultMap="baseSelectMap">
+        select * from dim_client where client_id=#{id}
+    </select>
+
+    <select id="indistinctClient"  resultMap="baseSelectMap">
+        select client_id  ,client_name ,company_name  ,pass_word , role ,industry ,phonenumber,headshot_image
+        from dim_client  where client_name like '%${name}%' or  company_name like '%${companyName}%'
+    </select>
+
+    <!--前端接口-->
+    <select id="findClientByName" resultMap="baseSelectMap">   <!-- 解决重名-->
+        select * from dim_client where client_name=#{name}
+    </select>
+
+    <select id="validate" resultMap="baseSelectMap" >
+        select * from dim_client where client_name=#{name} and pass_word = #{password} and current_date < = end_date
+    </select>
+
+    <!--登录验证增加日期条件-->
+    <select id="validateByEmail" resultMap="baseSelectMap" >
+        select * from dim_client where email_address=#{name} and pass_word = #{password} and current_date Between start_date And end_date
+    </select>
+
+    <select id="findId"  resultType="java.lang.String" >    <!-- 登录后，查找id-->
+        select client_id  from dim_client where client_name = #{clientName} AND pass_word=#{password}
+    </select>
+    <select id="findIdByEmail"  resultType="java.lang.String">
+        select client_id  from dim_client where email_address = #{emailAddress} AND pass_word=#{password}
+    </select>
+
+    <select id="findIdAndIdentity"  resultType="java.util.HashMap" >    <!-- 登录后，查找id和身份标识（零售商）-->
+        select client_id, idy  from dim_client where client_name = #{clientName} AND pass_word=#{password}
+    </select>
+    <select id="findIdIdentityByEmail"  resultType="java.util.HashMap">
+        select client_id , idy from dim_client where email_address = #{emailAddress} AND pass_word=#{password}
+    </select>
+
+    <select id="findIdBanner"  resultType="java.util.HashMap" >    <!-- -->
+        select client_id,banner_code  from dim_client where client_name = #{clientName} AND pass_word=#{password}
+    </select>
+    <select id="findIdByEmailBanner"  resultType="java.util.HashMap">
+        select client_id ,banner_code from dim_client where email_address = #{emailAddress} AND pass_word=#{password}
+    </select>
+
+    <!--返回clientId和banner_code,idy. datadate -->
+    <select id="findIdBannerIdentity"  resultMap="secMap" >
+        select data_date_start,data_date_end ,client_id,banner_code , idy from dim_client where client_name = #{clientName} AND pass_word=#{password}
+    </select>
+    <select id="findIdByEmailBannerIdentity"  resultMap="secMap">
+        select data_date_start,data_date_end ,client_id ,banner_code ,idy  from dim_client where email_address = #{emailAddress} AND pass_word=#{password}
+    </select>
+
+    <!-- 登录后，查找id,验证是否在用户有效期-->
+    <select id="isDateUseful"  resultType="java.lang.String" >
+        select client_id  from dim_client where client_name = #{clientName} AND pass_word=#{password} and current_date Between to_date(start_date, 'yyyy-mm-dd')
+AND  to_date(end_date, 'yyyy-mm-dd')
+    </select>
+
+    <select id="isDateUsefulByEmail"  resultType="java.lang.String">
+        select client_id  from dim_client where email_address = #{emailAddress} AND pass_word=#{password} and current_date Between to_date(start_date, 'yyyy-mm-dd')
+AND  to_date(end_date, 'yyyy-mm-dd')
+    </select>
+
+</mapper>

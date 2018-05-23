@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.ShopMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.Shop">
+        <id column="shop_id" property="shopId" />
+        <result column="banner_id" property="bannerId" />
+        <result column="city_id" property="cityId" />
+        <result column="shop_franchise_id" property="shopFranchiseId" />
+        <result column="shop_code" property="shopCode" />
+        <result column="shop_no" property="shopNo" />
+        <result column="shop_name" property="shopName" />
+        <result column="shop_address" property="shopAddress" />
+        <result column="shop_geo" property="shopGeo" />
+        <result column="shop_open_day" property="shopOpenday" />
+        <result column="new_shop" property="newShop" />
+        <result column="distribution_status" property="distributionStatus" />
+        <result column="data_source" property="dataSource" />
+        <result column="cre_user" property="creUser" />
+        <result column="cre_date" property="creDate" />
+        <result column="upd_user" property="updUser" />
+        <result column="upd_date" property="updDate" />
+    </resultMap>
+
+    <insert id="addShop"  parameterType="com.spring.model.Shop" >
+        insert into  dim_shop (shop_id,banner_id,city_id,shop_franchise_id,shop_code,shop_no,shop_name,shop_address,shop_geo,shop_open_day,new_shop,distribution_status,data_source,cre_date,cre_user)
+                        values(#{shopId},#{bannerId},#{cityId},#{shopFranchiseId},#{shopCode},#{shopNo},#{shopName},#{shopAddress},#{shopGeo},#{shopOpenday},#{newShop},#{distributionStatus},#{dataSource},CURRENT_TIMESTAMP(),#{creUser}) ;
+        </insert>
+
+    <update id="updateShop" parameterType="com.spring.model.Shop" >
+        update dim_shop set shop_no=#{shopNo}
+        where shop_name=#{shopName}
+    </update>
+
+    <delete id="deleteShopByName" >
+      delete from dim_shop where shop_name=#{shopName}
+    </delete>
+
+    <select id="findShopByName" resultMap="baseSelectMap">
+      select * from dim_shop where shop_name=#{shopName}
+    </select>
+</mapper>

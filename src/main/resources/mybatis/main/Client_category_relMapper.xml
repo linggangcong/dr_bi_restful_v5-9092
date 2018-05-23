@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.Client_category_relMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.Client_category_rel">
+        <id column="client_id" property="clientId" />
+        <result column="category_code" property="categoryCode" />
+</resultMap>
+
+    <insert id="addClient_category_rel"  parameterType="com.spring.model.Client_category_rel" >
+
+        insert into  dim_client_category_rel (client_id,category_code) values(#{clientId},#{categoryCode});
+    </insert>
+
+    <update id="updateClient_category_rel" parameterType="com.spring.model.Client_category_rel" >
+        update dim_client_category_rel set category_code=#{categoryCode}
+        where client_id=#{clientId}
+    </update>
+
+    <delete id="deleteClient_category_relByName" >
+        delete from dim_client_category_rel where client_id=#{clientId}
+    </delete>
+
+    <select id="findClient_category_relByName" resultMap="baseSelectMap">
+        select * from dim_client_category_rel where client_id=#{clientId}
+    </select>
+</mapper>

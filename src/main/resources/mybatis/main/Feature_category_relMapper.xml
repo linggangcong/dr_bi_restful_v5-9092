@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.Feature_category_relMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.Feature_category_rel">
+        <result column="product_category_code" property="categoryCode" />
+        <result column="product_category_id" property="categoryId" />
+        <result column="product_feature_type_code" property="featureTypeCode" />
+        <result column="product_feature_type_desc" property="featureTypeDesc" />
+    </resultMap>
+
+    <resultMap id="basicMap" type="hashmap">
+        <result column="product_feature_type_code" property="featureTypeCode" />
+        <result column="product_feature_type_desc" property="featureTypeDesc" />
+    </resultMap>
+    <resultMap id="secondMap" type="hashmap">
+        <result column="product_feature_code" property="featureCode" />
+        <result column="product_feature_desc" property="featureDesc" />
+    </resultMap>
+
+    <insert id="addfeature_category_rel"  parameterType="com.spring.model.Feature_category_rel" >
+        insert into  dim_feature_category_rel (product_category_id ,product_category_code,product_feature_type_code,product_feature_type_desc) values(#{categoryId},#{categoryCode},#{featureTypeCode},#{featureTypeDesc});
+    </insert>
+
+    <update id="updatefeature_category_rel" parameterType="com.spring.model.Feature_category_rel" >
+        update dim_feature_category_rel set product_category_code=#{categoryCode},product_feature_type_code=#{featureTypeCode}
+        where product_feature_type_desc=#{featureTypeDesc}
+    </update>
+
+    <delete id="deletefeature_category_relByName" >
+      delete from dim_feature_category_rel where product_feature_type_desc=#{featureTypeDesc}
+    </delete>
+
+    <select id="findfeature_category_relByName" resultMap="baseSelectMap">
+      select * from dim_feature_category_rel where product_category_code=#{categoryCode}
+    </select>
+
+    <select id="findFeaturetypeByCategory" resultMap="basicMap"> <!-- 从品类，查询特征类型  -->
+        select DISTINCT dpft.product_feature_type_desc,dpft.product_feature_type_code from dim_feature_category_rel dpcf,dim_product_feature_type dpft
+        where dpcf.product_category_code=#{categoryCode} and dpcf.product_feature_type_code=dpft.product_feature_type_code
+    </select>
+
+   <!-- <select id="findFeatureByCategory11"  resultMap="secondMap11"  >
+        select DISTINCT ddd.product_feature_desc , ddd.product_feature_code
+        from  (select dpf.product_feature_desc , dpf.product_feature_code from dim_featuretype_feature_rel dffr , dim_product_feature dpf
+				where dffr.product_feature_type_code =#{featuretypeCode} and dffr.product_feature_code =dpf.product_feature_code ) ddd,
+        dim_product_category dpc, dim_category_feature_rel dcfr
+        where dpc.product_category_code=#{categoryCode}
+        and  dpc.product_category_code = dcfr.product_category_code
+        and dcfr.product_feature_code=ddd.product_feature_code
+     </select>
+-->
+
+    <select id="findFeatureByCategory"  resultMap="secondMap" >
+        SELECT DISTINCT
+            dpf.product_feature_desc,
+            dpf.product_feature_code
+        FROM
+            dim_category_feature_featuretype_rel dcffr,
+            dim_product_feature dpf
+        WHERE
+            dcffr.category_code = #{categoryCode}
+        AND dcffr.featuretype_code =#{featuretypeCode}
+        AND dcffr.feature_id = dpf.product_feature_id
+    </select>
+
+</mapper>

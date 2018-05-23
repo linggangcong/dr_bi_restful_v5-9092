@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.ProvinceMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.Province">
+        <id column="province_id" property="provinceId" />
+        <id column="country_id" property="countryId" />
+        <result column="province_district_code" property="provinceDistrictCode" />
+        <result column="province" property="province" />
+        <result column="province_name" property="provinceName" />
+    </resultMap>
+    <insert id="addProvince"  parameterType="com.spring.model.Province" >
+
+        insert into  dim_province (province_id,country_id,province_district_code,province,province_name)
+                            values(#{provinceId},#{countryId},#{provinceDistrictCode},#{province},#{provinceName})
+    </insert>
+
+    <update id="updateProvince" parameterType="com.spring.model.Province" >
+        update dim_province set province_id=#{provinceId},country_id=#{countryId},province_district_code=#{provinceDistrictCode},province=#{province}
+        where province_name=#{provinceName}
+    </update>
+
+    <delete id="deleteProvinceByName" >
+        delete from dim_province where province_name=#{provinceName}
+    </delete>
+
+    <select id="findProvinceByName" resultType="com.spring.model.Province">
+        select * from dim_province where province_name=#{provinceName}
+    </select>
+
+
+    <select id="findAll" resultMap="baseSelectMap">
+        select province_name from dim_province
+    </select>
+
+    <select id="findAllName" resultType="Map">
+        select province ,province_name as provinceName from dim_province
+    </select>
+
+    <select id="citiesInProvince" resultMap="baseSelectMap">
+        select p.province_name ,c.city_name  from dim_province p , dim_city c where p.province_id=c.province_id
+    </select>
+
+
+    <select id="provincesOfClient" resultType="java.lang.String">
+        select  p.province_name as province_name
+        from dim_client c,dim_client_province_rel cpr ,dim_province p
+        where c.client_id=cpr.client_id and cpr.province_name= p.province_name and c.client_name = #{clientName}
+    </select>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.main.Parent_brandMapper">
+
+
+    <insert id="addParent_brand"  parameterType="com.spring.model.Parent_brand"  >
+        insert into  dim_parent_brand (parent_brand_id,parent_brand_code,parent_brand_name,data_source,cre_date,cre_user) values(#{parent_brand_id},#{parent_brand_code},#{parent_brand_name},#{data_source},CURRENT_TIMESTAMP (),#{cre_user});
+    </insert>
+
+    <update id="updateParent_brand" parameterType="com.spring.model.Parent_brand" >
+        update dim_parent_brand set parent_brand_id=#{parent_brand_id},parent_brand_code=#{parent_brand_code},data_source=#{data_source},upd_date=CURRENT_TIMESTAMP (),upd_user=#{upd_user}
+         where parent_brand_name=#{parent_brand_name}
+    </update>
+
+    <delete id="deleteParent_brandByName" >
+      delete from dim_parent_brand where parent_brand_name=#{parent_brand_name}
+    </delete>
+
+    <select id="findParent_brandByName"  resultType="com.spring.model.Parent_brand">
+      select * from dim_parent_brand where parent_brand_name=#{parent_brand_name}
+    </select>
+
+    <select id="categoryToParentBrand"   resultType="com.spring.model.Parent_brandTrimed">
+        SELECT distinct   pb.parent_brand_id as parent_brand_id,pb.parent_brand_name as parent_brand_name
+        FROM dim_product_category_rel pcr ,dim_product_category pc ,dim_product p,dim_parent_brand pb
+        WHERE pcr.product_category_code=pc.product_category_code and p.product_id =pcr.product_id and p.parent_brand_id=pb.parent_brand_id and pc.product_category_code=#{code}
+    </select>
+
+    <select id="brandOfClient"   resultType="com.spring.model.Parent_brandTrimed">
+        select parent_brand_id as parent_brand_id ,parent_brand_name as parent_brand_name
+        from dim_client c,dim_client_brand_rel cbr ,dim_parent_brand pb
+        where c.client_id=cbr.client_id and cbr.brand_id= pb.parent_brand_id and c.client_name = #{clientName}
+    </select>
+
+
+</mapper>

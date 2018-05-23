@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.CategoryMapper">
+
+    <resultMap id="baseCategorySelect"  type="com.spring.model.Category">
+        <id column="product_category_code" property="code" />
+        <result column="product_category_id" property="id" />
+        <result column="product_category_desc_en" property="descEn" />
+        <result column="dr_category" property="drCategory" />
+        <result column="product_category_desc" property="desc"/>
+    </resultMap>
+
+    <resultMap id="CategorySelect"  type="com.spring.model.Category">
+        <id column="product_category_code" property="id" />
+        <result column="product_category_desc" property="desc"/>
+    </resultMap>
+
+
+    <insert id="addCategory"  parameterType="com.spring.model.Category" >
+        insert into  dim_product_category (product_category_id,product_category_code,product_category_desc,product_category_desc_en,product_category_flag)
+        values(#{id},#{code},#{desc}#{descEn},#{drCategory});
+    </insert>
+
+    <update id="updateCategory" parameterType="com.spring.model.Category" >
+        update dim_product_category set product_category_code=#{code}
+        where product_category_desc=#{desc}
+    </update>
+
+    <delete id="deleteCategoryByName" >
+        delete from dim_product_category where product_category_code=#{code}
+    </delete>
+
+    <select id="findCategoryByName" resultMap="baseCategorySelect">
+        select * from dim_product_category where product_category_desc=#{desc}
+    </select>
+
+
+    <select id="findByIndistinctName" resultMap="baseCategorySelect">
+        select *  from dim_product_category where product_category_desc  LIKE  "%${desc}%"
+    </select>
+
+    <select id="categoryOfClient" resultType="java.lang.String">
+        select DISTINCT  pc.product_category_desc as product_category_desc
+        from dim_client c,dim_client_category_rel ccr ,dim_product_category pc
+        where c.client_id=ccr.client_id and ccr.category_code= pc.product_category_code and c.client_name= #{clientName}
+    </select>
+
+    <select id="findAll" resultMap="baseCategorySelect">
+        select * from dim_product_category
+    </select>
+
+    <select id="findCategoryByClient" resultMap="baseCategorySelect">   <!--  依据客户的订购品类  -->
+        select dpc.* from dim_client_category_rel dccr, dim_product_category dpc where dccr.client_id = #{clientId}
+        and dccr.category_code=dpc.product_category_code
+    </select>
+
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.Client_brand_relMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.Client_brand_rel">
+        <id column="client_id" property="clientId" />
+        <result column="brand_id" property="brandId" />
+    </resultMap>
+
+    <insert id="addClient_brand_rel"  parameterType="com.spring.model.Client_brand_rel" >
+
+        insert into  dim_client_brand_rel (client_id,brand_id) values(#{clientId},#{brandId});
+    </insert>
+
+    <update id="updateClient_brand_rel" parameterType="com.spring.model.Client_brand_rel" >
+        update dim_client_brand_rel set brand_id=#{brandId} where client_id=#{clientId}
+    </update>
+
+    <delete id="deleteClient_brand_relByName" >
+        delete from dim_client_brand_rel where client_id=#{clientId}
+    </delete>
+
+    <select id="findClient_brand_relByName" resultMap="baseSelectMap">
+      select * from dim_client_brand_rel where client_id=#{clientId}
+    </select>
+
+
+</mapper>

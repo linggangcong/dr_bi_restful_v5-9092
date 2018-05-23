@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.Product_category_relMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.Product_category_rel">
+        <result column="product_id" property="productId" />
+        <result column="product_category_code" property="productCategoryCode" />
+    </resultMap>
+
+
+
+    <insert id="addProduct_category_rel"  parameterType="com.spring.model.Product_category_rel" >
+        insert into  dim_product_category_rel (product_code,product_id,product_category_code,product_category_id)
+        values(#{productCode},#{productId},#{productCategoryCode}#{productCategoryId});
+    </insert>
+
+    <update id="updateProduct_category_rel" parameterType="com.spring.model.Product_category_rel" >
+        update dim_product_category_rel set product_category_code=#{productCategoryCode}
+        where product_id=#{productId}
+    </update>
+
+    <delete id="deleteProduct_category_relById" >
+        delete from dim_product_category_rel where product_id=#{productId}
+    </delete>
+
+    <select id="findProduct_category_relById" resultMap="baseSelectMap">
+        select * from dim_product_category_rel where product_id=#{productId}
+    </select>
+
+
+
+</mapper>

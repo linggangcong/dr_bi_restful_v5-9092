@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.main.MessageMapper">
+
+
+    <resultMap id="baseMap" type="com.spring.model.Message">
+        <id column="id" property="id" />
+        <result column="type" property="type" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="content" property="content" />
+        <result column="receiver" property="receiver" />
+        <result column="sender" property="sender" />
+        <result column="subject" property="subject" />
+        <result column="cre_date" property="creDate" javaType="java.lang.String" jdbcType="TIMESTAMP" />
+        <result column="cre_user" property="creUser" />
+    </resultMap>
+
+    <insert id="addMessage"  parameterType="com.spring.model.Message">
+        insert into  dim_message (type,start_time,end_time,content,receiver,sender,subject,cre_date,cre_user)
+        values(#{type},#{startTime},#{endTime},#{content},#{receiver},#{sender},#{subject},CURRENT_TIMESTAMP,#{creUser});
+    </insert>
+
+    <update id="updateMessage" parameterType="com.spring.model.Message" >
+        update dim_message set start_time=#{startTime},end_time=#{endTime}, content=#{content},receiver=#{receiver},sender=#{sender},subject=#{subject} where id=#{id}
+    </update>
+
+    <delete id="deleteMessage" >
+      delete from dim_message where id=#{id}
+    </delete>
+
+    <select id="findById" resultMap="baseMap" >
+      select id,type,start_time,end_time ,content,receiver,sender,subject,cre_date,cre_user from dim_message where id=#{id}
+    </select>
+
+    <select id="findAll"  parameterType="map" resultMap="baseMap" >--    其他方法实现分页
+        select id,type,start_time ,end_time,content,receiver,sender,subject,cre_date ,cre_user from dim_message limit #{pageSize} offset #{offset}
+    </select>
+
+    <select id="findUnreadEvent"  resultMap="baseMap" >
+        select id,type,start_time ,end_time ,content,receiver,sender,subject, cre_date,cre_user
+        from dim_message m ,dim_message_client_rel mcl ,dim_client c
+        where c.client_id= mcl.client_id and mcl.message_id=m.id and m.type='event' and c.client_name = #{clientName} and mcl.status ='unread'
+    </select>
+
+    <select id="findUnreadMessage"  resultMap="baseMap" >
+        select id,type,start_time,end_time,content,receiver,sender,subject,cre_date,cre_user
+        from dim_message m ,dim_message_client_rel mcl ,dim_client c
+        where c.client_id= mcl.client_id and mcl.message_id=m.id and m.type='message' and c.client_name = #{clientName} and mcl.status ='unread'
+    </select>
+    <select id="findUnreadToall"  resultMap="baseMap" >
+        select id,type,start_time ,end_time ,content,receiver,sender,subject,cre_date,cre_user
+        from dim_message m ,dim_message_client_rel mcl ,dim_client c
+        where c.client_id= mcl.client_id and mcl.message_id=m.id and m.type='toall' and c.client_name = #{clientName} and mcl.status ='unread'
+    </select>
+
+
+
+    <select id="findValidToall"  resultMap="baseMap" >
+        select id,type,start_time ,end_time ,content,receiver,sender,subject,cre_date,cre_user
+        from dim_message m ,dim_message_client_rel mcl ,dim_client c
+        where c.client_id= mcl.client_id and mcl.message_id=m.id and m.type='toall' and c.client_name = #{clientName} and  CURRENT_TIMESTAMP BETWEEN m.start_time and   m.end_time
+    </select>
+    <select id="findValidEvent"  resultMap="baseMap" >
+        select id,type,start_time ,end_time ,content,receiver,sender,subject,cre_date,cre_user
+        from dim_message m ,dim_message_client_rel mcl ,dim_client c
+        where c.client_id= mcl.client_id and mcl.message_id=m.id and m.type='event' and c.client_name = #{clientName} and  CURRENT_TIMESTAMP BETWEEN m.start_time and   m.end_time
+    </select>
+    <select id="findValidMassage"  resultMap="baseMap" >
+        select id,type,start_time ,end_time ,content,receiver,sender,subject,cre_date,cre_user
+        from dim_message m ,dim_message_client_rel mcl ,dim_client c
+        where c.client_id= mcl.client_id and mcl.message_id=m.id and m.type='message' and c.client_name = #{clientName} and  CURRENT_TIMESTAMP BETWEEN m.start_time and   m.end_time
+    </select>
+
+</mapper>

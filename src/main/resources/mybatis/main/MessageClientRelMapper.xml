@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.main.MessageClientRelMapper">
+
+
+    <resultMap id="baseMap" type="com.spring.model.MessageClientRel">
+        <id column="client_id" property="clientId" />
+        <result column="message_id" property="messageId" />
+        <result column="status" property="status" />
+        <result column="show" property="show" />
+    </resultMap>
+
+    <update id="updateShow"  >   <!-- 对三种邮件，都合适  -->
+        update dim_message_Client_Rel
+        set showed ="disappear"
+        where client_id=#{clientId} and message_id=#{messageId}
+    </update>
+
+    <update id="updateStatus" >
+        update dim_message_client_rel
+        set status="readed"
+        where client_id=#{clientId} and message_id=#{messageId}
+    </update>
+
+</mapper>

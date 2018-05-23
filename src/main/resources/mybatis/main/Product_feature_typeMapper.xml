@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.Product_feature_typeMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.Product_feature_type">
+        <id column="product_feature_type_code" property="featureTypeCode" />
+        <result column="product_feature_type_desc" property="featureTypeDesc" />
+    </resultMap>
+
+    <insert id="addProduct_feature_type"  parameterType="com.spring.model.Product_feature_type">
+
+        insert into  dim_product_feature_type (product_feature_type_code,product_feature_type_desc) values(#{featureTypeCode},#{featureTypeDesc});
+    </insert>
+
+    <update id="updateProduct_feature_type" parameterType="com.spring.model.Product_feature_type" >
+        update dim_product_feature_type set product_feature_type_code=#{featureTypeCode}
+        where product_feature_type_desc=#{featureTypeDesc}
+    </update>
+
+    <delete id="deleteProduct_feature_typeByName" >
+        delete from dim_product_feature_type where product_feature_type_desc=#{featureTypeDesc}
+    </delete>
+
+    <select id="findProduct_feature_typeByName" resultMap="baseSelectMap">
+        select * from dim_product_feature_type where product_feature_type_desc=#{featureTypeDesc}
+    </select>
+</mapper>

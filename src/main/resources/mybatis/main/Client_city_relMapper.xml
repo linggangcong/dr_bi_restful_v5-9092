@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.Client_city_relMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.Client_city_rel">
+        <id column="client_id" property="clientId" />
+        <result column="city_id" property="cityId" />
+    </resultMap>
+    <insert id="addClient_city_rel"  parameterType="com.spring.model.Client_city_rel" >
+
+        insert into  dim_client_city_rel (client_id,city_id) values(#{clientId},#{cityId});
+    </insert>
+
+    <update id="updateClient_city_rel" parameterType="com.spring.model.Client_city_rel" >
+        update dim_client_city_rel set city_id=#{cityId}
+        where client_id=#{clientId}
+    </update>
+
+    <delete id="deleteClient_city_relByName" >
+        delete from dim_client_city_rel where client_id=#{clientId}
+    </delete>
+
+    <select id="findClient_city_relByName" resultMap="baseSelectMap">
+        select * from dim_client_city_rel where client_id=#{clientId}
+    </select>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.ProductMapper">
+    <!--<resultMap id="baseProductSelect"  type="com.spring.model.Product">
+        <id column="product_id" property="productId"/>
+        <result column="product_name" property="productName"/>
+    </resultMap>-->
+
+    <insert id="addProduct"  parameterType="com.spring.model.Product" >
+        insert into  dim_product (product_id,banner_id,supplier_id,specification_id,sale_country_id,parent_brand_id,child_brand_id,gid,delivery_company,bar_code,product_code,product_name,product_detail_desc,product_short_desc,manufacturer,product_origin,
+        sell_frequency,retail_price,purchase_price,wholesale_price,pack_specification,delivery_unit,product_start_time,product_end_time,dat_source,cre_date,cre_user )
+        values(#{productId},#{bannerId},#{supplierId},#{specificationId},#{saleCountryId},#{parentBrandId},#{chilidBrandId},#{gid},#{deliveryCompany},#{barCode},#{productCode},#{productName},#{productDetailDesc},#{productShortDesc},#{manufacturer},
+        #{productOrigin},#{sellFrequency},#{retailPrice},#{purchasePrice},#{wholesalePrice},#{packSpecification},#{deliveryUnit},#{productStartTime},#{productEndTime},#{dataSource},CURRENT_TIMESTAMP (),#{creUser});
+    </insert>
+
+    <update id="updateProduct" parameterType="com.spring.model.Product" >
+        update dim_product set product_id=#{productId},banner_id=#{productId},supplier_id=#{productId},specification_id=#{productId},sale_country_id=#{productId},parent_brand_id=#{productId},child_brand_id=#{productId},gid=#{gid},delivery_company=#{deliveryCompany},
+        bar_code=#{barCode},product_code=#{productCode},product_detail_desc=#{productDetailDesc},product_short_desc=#{productShortDesc},manufacturer=#{manufacturer},product_origin=#{productOrigin},sell_frequency=#{sellFrequency},
+           retail_price=#{retailPrice} ,purchase_price=#{purchasePrice},wholesale_price=#{wholesalePrice},pack_specification=#{packSpecification},delivery_unit=#{deliveryUnit},product_start_time=#{productStartTime},product_end_time=#{productEndTime},data_source=#{dataSource},
+          upd_date=CURRENT_TIMESTAMP (),upd_user=#{updUser}
+         where product_name=#{productName}
+    </update>
+
+
+    <delete id="deleteProductByName" >
+        delete from dim_product where product_name=#{productName}
+    </delete>
+
+    <select id="findProductByName" resultType="com.spring.model.Product" >
+        select product_id as productId ,product_code as productCode
+        from dim_product where product_name=#{productName}
+    </select>
+
+
+    <select id="productsInCategory"  resultType="com.spring.model.ProductTrimed" >
+        SELECT p.product_id as productId,p.product_name as productName
+        FROM dim_product_category_rel pcr ,dim_product_category pc ,dim_product p
+        WHERE pcr.product_category_code=pc.product_category_code and p.product_id =pcr.product_id AND pc.product_category_code=#{code}
+    </select>
+
+    <select id="productsInCategoryBrand"  resultType="com.spring.model.ProductTrimed" >
+         SELECT p.product_id as productId ,p.product_name as productName
+         FROM dim_product_category_rel pcr ,dim_product_category pc ,dim_product p,dim_parent_brand pb
+         WHERE pcr.product_category_code=pc.product_category_code AND pc.product_category_code=#{categoryCode}
+         and p.product_id =pcr.product_id and p.parent_brand_id=pb.parent_brand_id AND PB.parent_brand_name=#{brandName}
+    </select>
+
+</mapper>

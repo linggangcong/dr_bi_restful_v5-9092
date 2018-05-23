@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.main.BannerMapper">
+
+    <resultMap id="BaseResultMap" type="com.spring.model.Banner">
+        <id column="banner_id" jdbcType="INTEGER" property="banner_id" />
+        <result column="city_id" jdbcType="INTEGER" property="city_id" />
+        <result column="banner_code" jdbcType="VARCHAR" property="banner_code" />
+        <result column="banner_name" jdbcType="VARCHAR" property="banner_name" />
+        <result column="banner_open_day" jdbcType="DATE" property="banner_open_day" />
+        <result column="banner_scale" jdbcType="VARCHAR" property="banner_scale" />
+        <result column="banner_type" jdbcType="VARCHAR" property="banner_type" />
+        <result column="data_source" jdbcType="VARCHAR" property="data_source" />
+        <result column="cre_date" jdbcType="TIMESTAMP" property="cre_date" />
+        <result column="cre_user" jdbcType="VARCHAR" property="cre_user" />
+        <result column="upd_date" jdbcType="TIMESTAMP" property="upd_date" />
+        <result column="upd_user" jdbcType="VARCHAR" property="upd_user" />
+    </resultMap>
+    <insert id="insertBanner" parameterType="com.spring.model.Banner">
+        INSERT INTO dim_banner (banner_id,city_id,banner_code,banner_name,banner_open_day,banner_scale,banner_type,data_source,cre_date,cre_user,upd_date,upd_user)
+        VALUES   (#{banner_id},#{city_id},#{banner_code},#{banner_name},#{banner_open_day},#{banner_scale},
+        #{banner_type},#{data_source},#{cre_date},#{cre_user},#{upd_date},#{upd_user})
+    </insert>
+
+    <update id="updateBanner" >
+        UPDATE dim_banner SET banner_scale = #{banner_scale} WHERE banner_name = #{banner_name}
+    </update>
+
+    <delete id="deleteBannerByName" >
+        DELETE FROM dim_banner   WHERE banner_name= #{name}
+    </delete>
+
+    <select id="getBannerByName" resultType="com.spring.model.Banner" >
+        select * from  dim_banner where banner_name=#{name}
+    </select>
+
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.SupplierMapper">
+
+    <resultMap id="baseSupplierSelect"  type="com.spring.model.Supplier">
+        <id column="supplier_id" property="id"/>
+        <result column="city_id" property="cityId"/>
+        <result column="supplier_code" property="code"/>
+        <result column="supplier_name" property="name"/>
+        <result column="supplier_address" property="address"/>
+        <result column="supplier_geo" property="geo"/>
+        <result column="data_source" property="dataSource" />
+        <result column="cre_date" property="creDate"/>
+        <result column="cre_user" property="creUser"/>
+        <result column="upd_date" property="updDate" javaType="java.sql.Timestamp" jdbcType="VARCHAR" typeHandler="com.spring.model.NullTypeHandler"/>
+        <result column="upd_user" property="updUser"/>
+    </resultMap>
+    <insert id="addSupplier"  parameterType="com.spring.model.Supplier" >
+        insert into  dim_supplier (supplier_id,city_id,supplier_code,supplier_name,supplier_address,supplier_geo,data_source,cre_date,cre_user) values(#{id},#{cityId},#{code},#{name},#{address},#{geo},#{dataSource},CURRENT_TIMESTAMP (),#{creUser});
+    </insert>
+
+    <update id="updateSupplier" parameterType="com.spring.model.Supplier" >
+        update dim_supplier set supplier_id=#{id},city_id=#{cityId},supplier_name=#{name},supplier_address=#{address},supplier_geo=#{geo},data_source=#{dataSource},upd_date=CURRENT_TIMESTAMP (),upd_user=#{updUser}   where supplier_code=#{code}
+    </update>
+
+    <delete id="deleteSupplierById" >
+        delete from dim_supplier where supplier_code=#{code}
+    </delete>
+
+    <select id="findSupplierById" resultMap="baseSupplierSelect">
+        select * from dim_supplier where supplier_code=#{code}
+    </select>
+</mapper>

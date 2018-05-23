@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.ShopNewMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.ShopNew">
+        <result column="shop_id_language" property="shopIdLanguage" />
+        <result column="shop_id" property="shopId" />
+        <result column="shop_num" property="shopNum" />
+        <result column="language" property="language" />
+        <result column="shop_name" property="shopName" />
+        <result column="banner_id" property="bannerId" />
+        <result column="detailed_address" property="detailAddress" />
+        <result column="longitude" property="longitude" />
+        <result column="latitude" property="latitude" />
+        <result column="country_id" property="countryId" />
+        <result column="province_id" property="provinceId" />
+        <result column="city_id" property="cityId" />
+        <result column="district_id" property="districtId" />
+        <result column="street_id" property="streetId" />
+        <result column="trading_area_id" property="tradingAreaId" />
+        <result column="start_date" property="startDate" />
+        <result column="is_new_shop" property="isNew" />
+        <result column="franchise_id" property="franchiseId" />
+    </resultMap>
+
+    <insert id="addShopNew"  parameterType="com.spring.model.ShopNew" >
+        insert into  dim_shop_new (shop_id_language,shop_id,shop_num,language,shop_name,banner_id,detailed_address,longitude,latitude
+        ,country_id,province_id,city_id,district_id,street_id,trading_area_id,start_date,is_new_shop,franchise_id)
+                        values(#{shopIdLanguage},#{shopId},#{shopNum},#{language},#{shopName},#{bannerId},#{detailAddress}
+                        ,#{longitude},#{latitude},#{countryId},#{provinceId},#{cityId},#{districtId},#{streetId},#{tradingAreaId},#{startDate},#{isNew},#{franchiseId}) ;
+        </insert>
+
+    <update id="updateShopNew" parameterType="com.spring.model.ShopNew" >
+        update dim_shop_new set shop_id_language=#{shopIdLanguage},shop_num=#{shopNum},language=#{language},shop_name=#{shopName},banner_id=#{bannerId}
+                                ,detailed_address=#{detailAddress},longitude=#{longitude},latitude=#{latitude},country_id=#{countryId},province_id=#{provinceId}
+                                ,city_id=#{cityId},district_id=#{districtId},street_id=#{streetId},trading_area_id=#{tradingAreaId},start_date=#{startDate}
+                                ,is_new_shop=#{isNew},franchise_id=#{franchiseId}
+        where shop_id=#{shopId}
+    </update>
+
+    <delete id="deleteShopNewByName" >
+      delete from dim_shop_new where shop_id=#{shopId}
+    </delete>
+
+    <select id="findShopNewById" resultMap="baseSelectMap">
+      select * from dim_shop_new where shop_id=#{shopId}
+    </select>
+
+    <select id="findShopNewByLocation" resultMap="baseSelectMap" parameterType="map">
+        select * from dim_shop_new where country_id=#{0} and  province_id=#{1} and city_id=#{2} and district_id=#{3}
+    </select>
+
+</mapper>

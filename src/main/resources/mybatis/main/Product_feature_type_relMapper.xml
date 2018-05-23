@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.Product_feature_type_relMapper">
+
+    <insert id="addProduct_feature_type_rel"  parameterType="com.spring.model.Product_feature_type_rel" >
+
+        insert into  dim_product_feature_type_rel (product_id,product_feature_type_code) values(#{productId},#{featureTypeCode});
+    </insert>
+
+    <update id="updateProduct_feature_type_rel" parameterType="com.spring.model.Product_feature_type_rel" >
+        update dim_product_feature_type_rel set product_feature_type_code=#{featureTypeCode}
+        where product_id=#{productId}
+    </update>
+
+    <delete id="deleteProduct_feature_type_relById" >
+        delete from dim_product_feature_type_rel where product_id=#{productId}
+    </delete>
+
+    <select id="findProduct_feature_type_relById" resultType="com.spring.model.Product_feature_type_rel">
+        select * from dim_product_feature_type_rel where product_id=#{productId}
+    </select>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.Shop_franchiseMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.Shop_franchise">
+        <id column="shop_franchise_id" property="franchiseId" />
+        <result column="shop_franchise_code" property="franchiseCode" />
+        <result column="shop_franchise_desc" property="franchiseDesc" />
+        <result column="data_source" property="dataSource" />
+        <result column="cre_user" property="creUser" />
+        <result column="cre_date" property="creDate" />
+        <result column="upd_user" property="updUser" />
+        <result column="upd_date" property="updDate" />
+    </resultMap>
+
+    <insert id="addShop_franchise"  parameterType="com.spring.model.Shop_franchise" >
+
+        insert into  dim_shop_franchise (shop_franchise_id,shop_franchise_code,shop_franchise_desc,data_source,cre_date,cre_user)
+                                  values(#{franchiseId},#{franchiseCode},#{franchiseDesc},#{dataSource},CURRENT_TIMESTAMP(),#{creUser});
+    </insert>
+
+    <update id="updateShop_franchise" parameterType="com.spring.model.Shop_franchise" >
+        update dim_shop_franchise set shop_franchise_code=#{franchiseCode},shop_franchise_desc=#{franchiseDesc},upd_date=CURRENT_TIMESTAMP(),upd_user=#{updUser}
+        where shop_franchise_id=#{franchiseId}
+    </update>
+
+    <delete id="deleteShop_franchiseByName" >
+        delete from dim_shop_franchise where shop_franchise_id=#{franchiseId}
+    </delete>
+
+    <select id="findShop_franchiseByName" resultMap="baseSelectMap">
+        select * from dim_shop_franchise where shop_franchise_id=#{franchiseId}
+    </select>
+</mapper>

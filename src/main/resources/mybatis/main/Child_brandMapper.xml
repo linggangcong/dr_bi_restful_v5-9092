@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.main.Child_brandMapper">
+    <resultMap id="baseChild_brandSelect"  type="com.spring.model.Child_brand">
+        <id column="product_category_code" property="code"/>
+        <result column="product_category_desc" property="desc"/>
+    </resultMap>
+    <insert id="insertChild_brand" parameterType="com.spring.model.Child_brand">
+        INSERT INTO dim_child_brand (child_brand_id,child_brand_code,child_brand_name,data_source,cre_date,cre_user)
+        VALUES   (#{child_brand_id},#{child_brand_code},#{child_brand_name},#{data_source},CURRENT_TIMESTAMP (),#{cre_user})
+    </insert>
+
+    <update id="updateChild_brandByName" parameterType="com.spring.model.Child_brand">
+        UPDATE dim_child_brand
+        SET
+        child_brand_id=#{child_brand_id},child_brand_code=#{child_brand_code},data_source=#{data_source},upd_user=#{upd_user},upd_date=CURRENT_TIMESTAMP ()
+        WHERE child_brand_name=#{child_brand_name}
+    </update>
+
+    <delete id="deleteChild_brandByName" >
+        DELETE FROM dim_child_brand   WHERE child_brand_name= #{child_brand_name}
+    </delete>
+
+    <select id="getChild_brand" resultType="com.spring.model.Child_brand" >
+        select * from  dim_child_brand where child_brand_name=#{child_brand_name}
+    </select>
+
+</mapper>

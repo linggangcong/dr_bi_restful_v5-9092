@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.SpecificationMapper">
+    
+    <resultMap id="baseSpecificationSelect"  type="com.spring.model.Specification">
+        <id column="specification_id" property="id"/>
+        <result column="specification_code" property="code"/>
+        <result column="specification_name" property="name"/>
+        <result column="specification_desc" property="desc"/>
+        <result column="specification_unit" property="unit"/>
+        <result column="coefficient" property="coefficient"/>
+        <result column="data_source" property="dataSource" />
+        <result column="cre_date" property="creDate"/>
+        <result column="cre_user" property="creUser"/>
+        <result column="upd_date" property="updDate" javaType="java.sql.Timestamp" jdbcType="VARCHAR" typeHandler="com.spring.model.NullTypeHandler"/>
+        <result column="upd_user" property="updUser"/>
+    </resultMap>
+    
+    
+    
+    <insert id="addSpecification"  parameterType="com.spring.model.Specification" useGeneratedKeys="true" keyProperty="specification_id">
+
+        insert into  dim_specification (specification_id,specification_code,specification_name,specification_desc,specification_unit,coefficient,data_source,cre_date,cre_user)
+        values(#{id},#{code},#{name},#{desc},#{unit},#{coefficient},#{dataSource},CURRENT_TIMESTAMP (),#{creUser});
+    </insert>
+
+    <update id="updateSpecification" parameterType="com.spring.model.Specification" >
+        update dim_specification set  specification_code=#{code},specification_name=#{name},specification_unit=#{unit},coefficient=#{coefficient},data_source=#{dataSource},upd_date=CURRENT_TIMESTAMP (),upd_user=#{updUser}
+        where specification_id=#{id}
+    </update>
+
+    <delete id="deleteSpecificationByName" >
+        delete from dim_specification where specification_id=#{id}
+    </delete>
+
+    <select id="findSpecificationByName" resultMap="baseSpecificationSelect" parameterType="int">
+        select * from dim_specification where specification_id=#{id}
+    </select>
+</mapper>

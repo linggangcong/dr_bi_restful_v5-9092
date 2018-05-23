@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.main.DistrictMapper">
+
+    <resultMap id="BaseDistrictMap" type="com.spring.model.District">
+        <id column="district_id" jdbcType="INTEGER" property="district_id" />
+        <result column="city_id" jdbcType="INTEGER" property="city_id" />
+        <result column="district_name" jdbcType="VARCHAR" property="district_name" />
+        <result column="data_source" jdbcType="INTEGER" property="data_source" />
+        <result column="cre_date" jdbcType="TIMESTAMP" property="cre_date" />
+        <result column="cre_user" jdbcType="VARCHAR" property="cre_user" />
+        <result column="upd_date" jdbcType="TIMESTAMP" property="upd_date" />
+        <result column="upd_user" jdbcType="VARCHAR" property="upd_user" />
+    </resultMap>
+    <insert id="addDistrict"  parameterType="com.spring.model.District"  >
+        insert into  dim_district (district_id,city_id,district_name,data_source,cre_date,cre_user) values(#{district_id},#{city_id},#{district_name},#{data_source},CURRENT_TIMESTAMP (),#{cre_user});
+    </insert>
+
+    <update id="updateDistrict" parameterType="com.spring.model.District" >
+        update dim_district set district_id=#{district_id},city_id=#{city_id},data_source=#{data_source},upd_date=#{upd_date},upd_user=#{upd_user}
+         where district_name=#{district_name}
+    </update>
+
+    <delete id="deleteDistrictByName" >
+      delete from dim_district where district_name=#{name}
+    </delete>
+
+    <select id="findDistrictByName" resultMap="BaseDistrictMap">
+      select * from dim_district where district_name=#{name}
+    </select>
+
+</mapper>

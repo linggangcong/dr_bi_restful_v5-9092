@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.CountryMapper">
+    <resultMap id="baseCountrySelect"  type="com.spring.model.Country">
+        <id column="country_id" property="countryId"/>
+        <result column="country_en" property="countryEn"/>
+        <result column="country_name" property="countryName"/>
+    </resultMap>
+
+    <resultMap id="provincesCountrySelect"  type="com.spring.model.ProvincesOneCountry">  <!--    -->
+        <result column="country_name" property="countryName"/>
+        <collection property="provinces" column="provinces_include" ofType="com.spring.model.Province">
+            <result property="provinceName" column="province_name"></result>
+        </collection>
+    </resultMap>
+
+
+
+    <insert id="addCountry"  parameterType="com.spring.model.Country" >
+        insert into  dim_country (country_id,country_en,country_name) values(#{countryId},#{countryEn},#{countryName});
+    </insert>
+    <update id="updateCountry" parameterType="com.spring.model.Country" >
+        update dim_country set country_en=#{countryEn},country_id=#{countryId} where country_name=#{countryName}
+    </update>
+    <delete id="deleteCountryByName" >
+        delete from dim_country where country_name=#{name}
+    </delete>
+    <select id="findCountryByName" resultMap="baseCountrySelect" >
+        select * from dim_country where country_name=#{name}
+    </select>
+    <select id="selectAll" resultMap="baseCountrySelect" >
+        select * from dim_country
+    </select>
+
+    <select id="selectProvincesOneCountry" resultMap="provincesCountrySelect" >
+        select  c.country_name , p.province_name from dim_country c ,dim_province p where c.country_id=p.country_id and c.country_id=174;
+    </select>
+
+</mapper>

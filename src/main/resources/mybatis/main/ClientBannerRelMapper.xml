@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.main.ClientBannerRelMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.ClientBannerRel">
+        <id column="banner_code" property="clientCode" />
+        <result column="banner_desc" property="bannerDesc" />
+    </resultMap>
+    <!--
+        <insert id="addClientBannerRel"  parameterType="com.spring.model.ClientBannerRel"  >
+            insert into  dim_city (city_id,city_code,province_id,province_code,city,city_name,city_level) values(#{city_id},#{city_code},#{province_id},#{province_code},#{city},#{city_name},#{city_level});
+        </insert>
+
+        <update id="updateClientBannerRel" parameterType="com.spring.model.ClientBannerRel" >
+            update dim_city set city_id=#{city_id},province_id=#{province_id},city_code=#{city_code},province_code=#{province_code}, city=#{city},city_level=#{city_level} where city_name=#{city_name}
+        </update>
+
+        <delete id="deleteClientBannerRel" >
+          delete from dim_city where city_name=#{name}
+        </delete>
+    -->
+    <select id="findBannerByClientName" resultType="java.util.HashMap" >
+      select banner_code,banner_desc from dim_client_banner_rel where client_name=#{name}
+    </select>
+
+</mapper>
