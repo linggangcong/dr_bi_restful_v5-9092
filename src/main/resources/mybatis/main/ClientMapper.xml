@@ -17,10 +17,11 @@
         <result column="email_address" property="emailAddress" />
         <result column="banner_code" property="bannerCode" />
         <result column="idy" property="idy" />
-        <result column="start_date" property="startDate" />
+        <result column="publish_type" property="publishType" />
         <result column="end_date"  property="endDate"/>
         <result column="data_date_start" property="startDataDate" />
-        <result column="data_date_end"  property="endDataDate"/>
+        <result column="day_month"  property="dayOfMonth"/>
+        <result column="day_week"  property="dayOfWeek"/>
 
         <!--<result column="start_date" jdbcType="DATE" property="startDate" javaType="java.util.Date" />-->
         <!--<result column="end_date" jdbcType="DATE" property="startDate" javaType="java.util.Date" />-->
@@ -33,94 +34,122 @@
         <result column="banner_code" property="bannerCode" />
         <result column="idy" property="idy" />
         <result column="data_date_start" property="startDataDate" />
-        <result column="data_date_end" property="endDataDate" />
+        <result column="end_date" property="endDate" />
+        <result column="day_month"  property="dayOfMonth"/>
+        <result column="day_week"  property="dayOfWeek"/>
+        <result column="publish_type" property="publishType" />
     </resultMap>
 
     <!--2018180517 管理接口-->
-    <!--<insert id="addClient"   >-->
-        <!--insert into  dim_client (client_id,idy,banner_code,client_name,company_name,pass_word,start_date,end_date,data_date_start,data_date_start)-->
-        <!--values(#{0},#{1},#{2},#{3},#{4},#{5},#{6},#{7},#{8},#{9})-->
-    <!--</insert>-->
-    <insert id="addClient"   >
-        insert into  dim_client (client_id,role,phonenumber,industry,headshot_image,gender,email_address,idy,banner_code,client_name,company_name,pass_word,start_date,end_date,data_date_start,data_date_end)
-        values(#{id},#{role},#{phoneNum},#{industry},#{headshot},#{gender},#{emailAddress},#{idy},#{bannerCode},#{name},#{companyName},#{password},#{startDate},#{endDate},#{startDataDate},#{endDataDate})
+
+   <!-- <insert id="addClient"   >
+        insert into  dim_client (client_id,role,phonenumber,industry,headshot_image,gender,email_address,
+        idy,banner_code,client_name,company_name,pass_word,end_date,data_date_start,publish_type,day_month,day_week)
+        values(#{id},#{role},#{phoneNum},#{industry},#{headshot},#{gender},#{emailAddress},#{idy},#{bannerCode},#{name},
+        #{companyName},#{password},#{endDate},#{startDataDate},#{publishType},#{dayOfMonth},#{dayOfWeek})
+    </insert>-->
+
+    <!--设主键,默认值-->
+    <insert id="addClient" >
+        insert into  dim_client (role,phonenumber,industry,headshot_image,gender,email_address,
+        idy,banner_code,client_name,company_name,pass_word,end_date,data_date_start,publish_type,day_month,day_week)
+        values('null',#{phoneNum},#{industry},'null','null','null',#{idy},#{bannerCode},#{name},
+        #{companyName},#{password},#{endDate},#{startDataDate},#{publishType},#{dayOfMonth},#{dayOfWeek})
     </insert>
 
-    <!--<update id="updateClient"  >-->
-        <!--update dim_client set  client_id=#{0},idy=#{1}, banner_code=#{2}, company_name=#{4},pass_word=#{5},-->
-        <!--start_date=#{6},end_date=#{7}, data_date_start=#{8}, data_date_start=#{9}-->
-        <!--where client_name=#{3}-->
-    <!--</update>-->
+    <!--<update id="updateClient" parameterType="com.spring.model.Client"  >
+        update dim_client set  client_id=#{id},role=#{role},phonenumber=#{phoneNum},industry=#{industry},headshot_image=#{headshot},gender=#{gender},
+        email_address=#{emailAddress},idy=#{idy}, banner_code=#{bannerCode},client_name=#{name},company_name=#{companyName},pass_word=#{password},
+        publish_type=#{publishType},end_date=#{endDate}, data_date_start=#{startDataDate}, day_month=#{dayOfMonth}, day_week=#{dayOfWeek}
+        where client_name=#{name}
+    </update>-->
 
     <update id="updateClient" parameterType="com.spring.model.Client"  >
-        update dim_client set  client_id=#{id},idy=#{idy}, banner_code=#{bannerCode}, company_name=#{companyName},pass_word=#{password},
-        start_date=#{startDate},end_date=#{endDate}, data_date_start=#{startDataDate}, data_date_end=#{endDataDate}
+        update dim_client set phonenumber=#{phoneNum},industry=#{industry},idy=#{idy}, banner_code=#{bannerCode},
+        company_name=#{companyName},pass_word=#{password},
+        publish_type=#{publishType},end_date=#{endDate}, data_date_start=#{startDataDate}, day_month=#{dayOfMonth}, day_week=#{dayOfWeek}
         where client_name=#{name}
     </update>
+
     <delete id="deleteClientByName" >
         delete from dim_client where client_id=#{id}
     </delete>
+
     <select id="findClientById" resultMap="baseSelectMap">
         select * from dim_client where client_id=#{id}
     </select>
 
     <select id="indistinctClient"  resultMap="baseSelectMap">
-        select client_id  ,client_name ,company_name  ,pass_word , role ,industry ,phonenumber,headshot_image
+        select client_id  ,client_name ,company_name  ,pass_word , role ,industry ,phonenumber,headshot_image ,publish_type,end_date,data_date_start
         from dim_client  where client_name like '%${name}%' or  company_name like '%${companyName}%'
     </select>
 
     <!--前端接口-->
-    <select id="findClientByName" resultMap="baseSelectMap">   <!-- 解决重名-->
-        select * from dim_client where client_name=#{name}
-    </select>
-
-    <select id="validate" resultMap="baseSelectMap" >
-        select * from dim_client where client_name=#{name} and pass_word = #{password} and current_date < = end_date
-    </select>
+    <!--<select id="findClientByName" resultMap="baseSelectMap">   &lt;!&ndash; 解决重名&ndash;&gt;-->
+        <!--select * from dim_client where client_name=#{name}-->
+    <!--</select>-->
 
     <!--登录验证增加日期条件-->
+    <select id="validate" resultMap="baseSelectMap" >
+        select * from dim_client where client_name=#{name} and pass_word = #{password} and  current_date &lt;= end_date
+    </select>
     <select id="validateByEmail" resultMap="baseSelectMap" >
-        select * from dim_client where email_address=#{name} and pass_word = #{password} and current_date Between start_date And end_date
+        select * from dim_client where email_address=#{name} and pass_word = #{password} and current_date &lt;= end_date
     </select>
 
-    <select id="findId"  resultType="java.lang.String" >    <!-- 登录后，查找id-->
+
+    <!-- 登录后，查找id-->
+    <select id="findId"  resultType="java.lang.String" >
         select client_id  from dim_client where client_name = #{clientName} AND pass_word=#{password}
     </select>
     <select id="findIdByEmail"  resultType="java.lang.String">
         select client_id  from dim_client where email_address = #{emailAddress} AND pass_word=#{password}
     </select>
 
-    <select id="findIdAndIdentity"  resultType="java.util.HashMap" >    <!-- 登录后，查找id和身份标识（零售商）-->
+    <!-- 登录后，查找id和身份标识（零售商）-->
+    <select id="findIdAndIdentity"  resultType="java.util.HashMap" >
         select client_id, idy  from dim_client where client_name = #{clientName} AND pass_word=#{password}
     </select>
     <select id="findIdIdentityByEmail"  resultType="java.util.HashMap">
         select client_id , idy from dim_client where email_address = #{emailAddress} AND pass_word=#{password}
     </select>
 
-    <select id="findIdBanner"  resultType="java.util.HashMap" >    <!-- -->
+    <!-- 登录后，查找id和默认零售商（数据）-->
+    <select id="findIdBanner"  resultType="java.util.HashMap" >
         select client_id,banner_code  from dim_client where client_name = #{clientName} AND pass_word=#{password}
     </select>
     <select id="findIdByEmailBanner"  resultType="java.util.HashMap">
         select client_id ,banner_code from dim_client where email_address = #{emailAddress} AND pass_word=#{password}
     </select>
 
+
+    <!--返回 publish_type,day_month,day_week ,计算数据结束日期，方便展示-->
+    <select id="getDate"  resultMap="secMap" >
+        select publish_type,day_month,day_week from dim_client where client_name =#{clientName} AND pass_word=#{password}
+    </select>
+    <select id="getDateByEmail"  resultMap="secMap">
+        select publish_type,day_month,day_week from dim_client where email_address =#{emailAddress} AND pass_word=#{password}
+    </select>
+
+
     <!--返回clientId和banner_code,idy. datadate -->
     <select id="findIdBannerIdentity"  resultMap="secMap" >
-        select data_date_start,data_date_end ,client_id,banner_code , idy from dim_client where client_name = #{clientName} AND pass_word=#{password}
+        select data_date_start,end_date,client_id,banner_code , idy from dim_client where client_name = #{clientName} AND pass_word=#{password}
     </select>
     <select id="findIdByEmailBannerIdentity"  resultMap="secMap">
-        select data_date_start,data_date_end ,client_id ,banner_code ,idy  from dim_client where email_address = #{emailAddress} AND pass_word=#{password}
+        select data_date_start,end_date ,client_id ,banner_code ,idy  from dim_client where email_address = #{emailAddress} AND pass_word=#{password}
     </select>
 
-    <!-- 登录后，查找id,验证是否在用户有效期-->
+
+       <!-- &lt;!&ndash; 登录后，查找id,验证是否在用户有效期&ndash;&gt;
     <select id="isDateUseful"  resultType="java.lang.String" >
-        select client_id  from dim_client where client_name = #{clientName} AND pass_word=#{password} and current_date Between to_date(start_date, 'yyyy-mm-dd')
-AND  to_date(end_date, 'yyyy-mm-dd')
-    </select>
+            select client_id  from dim_client where client_name = #{clientName} AND pass_word=#{password} and current_date Between to_date(start_date, 'yyyy-mm-dd')
+    AND  to_date(end_date, 'yyyy-mm-dd')
+        </select>
 
     <select id="isDateUsefulByEmail"  resultType="java.lang.String">
-        select client_id  from dim_client where email_address = #{emailAddress} AND pass_word=#{password} and current_date Between to_date(start_date, 'yyyy-mm-dd')
-AND  to_date(end_date, 'yyyy-mm-dd')
-    </select>
+            select client_id  from dim_client where email_address = #{emailAddress} AND pass_word=#{password} and current_date Between to_date(start_date, 'yyyy-mm-dd')
+    AND  to_date(end_date, 'yyyy-mm-dd')
+        </select>-->
 
 </mapper>

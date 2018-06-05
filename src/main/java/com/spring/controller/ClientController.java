@@ -22,35 +22,7 @@ import java.util.Map;
 public class ClientController {
     @Resource
     private ClientService clientService;
-/*
-    @PostMapping(value="/add")
-    @ResponseBody
-    public CommonResponse addClient(String id,String idy ,String bannerCode,String name,  //,String email_address,String gender,String headshot,
-                                    String companyName,String pwd,String startDate,String endDate,  //,String phoneNum,String role,String industry
-                                    String data_date_start,String data_date_end){
-        int num=clientService.addClient(id,idy,  bannerCode, name,   //,email_address,gender, headshot
-                companyName, pwd, startDate,endDate,    //, phoneNum, role,industry
-                data_date_start,data_date_end);
-        return ResponseUtil.success(num);
-    }*/
 
-    /*@PostMapping(value="/add")
-    @ResponseBody
-    public CommonResponse addClient(String id,String idy){
-        Map paramMap=new HashMap();
-        paramMap.put("client_id",id );paramMap.put("idy",idy );
-        int num=clientService.addClient(paramMap);
-        return ResponseUtil.success(num);
-    }*/
-
-    /*@PostMapping(value="/add")
-    @ResponseBody
-    public CommonResponse addClient(String id,String idy){
-        *//*Map paramMap=new HashMap();
-        paramMap.put("client_id",id );paramMap.put("idy",idy );*//*
-        int num=clientService.addClient(id,idy);
-        return ResponseUtil.success(num);
-    }*/
 
     @PostMapping(value="/add")
     @ResponseBody
@@ -100,6 +72,7 @@ public class ClientController {
         String id= clientService.findId(name,password);
         return ResponseUtil.success(id);
     }
+
     //验证时间有效性。
     @GetMapping(value="/is_date_useful")
     @ResponseBody
@@ -108,7 +81,7 @@ public class ClientController {
         return ResponseUtil.success(isUseful);
     }
 
-    //查询用户id和identity。
+    //查询用户id和identity。  没用
     @GetMapping(value="/find_id_identity")
     @ResponseBody
     public CommonResponse findIdAndIdentity(String name,String password){
@@ -129,6 +102,22 @@ public class ClientController {
     @ResponseBody
     public CommonResponse findIdBannerIdentity(String name,String password){
         Client  idBannerMap= clientService.findIdBannerIdentity(name,password);
+        //String[] bannerCodeArr= idBannerMap.getBannerCode().split(":");
         return ResponseUtil.success(idBannerMap);
+    }
+    /*@GetMapping(value="/find_banner")
+    @ResponseBody
+    public CommonResponse findIdBanner(String name,String password){
+        Client  idBannerMap= clientService.findIdBannerIdentity(name,password);
+        String[] bannerCodeArr= idBannerMap.getBannerCode().split(":");
+        return ResponseUtil.success(bannerCodeArr);
+    }*/
+
+
+    @GetMapping(value="/get_data_end")
+    @ResponseBody
+    public CommonResponse getDataEnd(String name,String password){
+        String[] dateStrList= clientService.getDate(name,password);
+        return ResponseUtil.success(dateStrList);
     }
 }

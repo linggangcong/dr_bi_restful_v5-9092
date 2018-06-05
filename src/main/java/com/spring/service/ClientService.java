@@ -11,10 +11,7 @@ import java.util.Map;
  */
 @Mapper
 public interface ClientService {
-   
-   /*Integer  addClient(String client_id,String idy, String banner_code,String client_name,   //,String email_address,String gender,String headshot_image
-                      String company_name,String pass_word,String start_date,String end_date,  //,String phonenumber,String role,String industry
-                      String data_date_start,String data_date_end);*/
+
    Integer add(Client client);
    Integer update(Client client);
 
@@ -24,9 +21,12 @@ public interface ClientService {
 
    Client findById(String id);
 
+   String[] getDate(String name,  String password);
+
    List<Client> indistinctClient(String name , String companyName);
 
    boolean validate(Client client);
+
 
    String findId( String name,  String password);
    boolean isDateUseful( String name,  String password);

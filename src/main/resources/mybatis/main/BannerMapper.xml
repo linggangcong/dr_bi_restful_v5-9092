@@ -16,6 +16,7 @@
         <result column="upd_date" jdbcType="TIMESTAMP" property="upd_date" />
         <result column="upd_user" jdbcType="VARCHAR" property="upd_user" />
     </resultMap>
+
     <insert id="insertBanner" parameterType="com.spring.model.Banner">
         INSERT INTO dim_banner (banner_id,city_id,banner_code,banner_name,banner_open_day,banner_scale,banner_type,data_source,cre_date,cre_user,upd_date,upd_user)
         VALUES   (#{banner_id},#{city_id},#{banner_code},#{banner_name},#{banner_open_day},#{banner_scale},

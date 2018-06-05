@@ -3,6 +3,7 @@ package com.spring.service.impl;
 import com.spring.mapper.main.ClientMapper;
 import com.spring.model.Client;
 import com.spring.service.ClientService;
+import com.spring.util.CalendarUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,28 +17,6 @@ import java.util.Map;
 public class ClientServiceImpl implements ClientService {
     @Autowired
     ClientMapper clientMapper;
-
-    /*@Override
-    public Integer  addClient(String client_id,String idy,String banner_code,String client_name,   //,String email_address,String gender,String headshot_image,
-                              String company_name,String pass_word,String start_date,String end_date,  //,String phonenumber,String role,String industry
-                              String data_date_start,String data_date_end){
-        Integer num=clientMapper.addClient(client_id,idy,  banner_code, client_name,   //,email_address,gender, headshot_image
-                company_name, pass_word,  start_date,end_date,   //phonenumber, role,industry,
-                data_date_start,data_date_end);
-        if(num == 0){
-            ExceptionUtil.dataNotExistException("增加失败");
-        }
-        return num;
-    }*/
-
-
-    /*public Integer  addClient(String client_id,String idy){
-        Integer num=clientMapper.addClient(client_id,idy);
-        if(num == 0){
-            ExceptionUtil.dataNotExistException("增加失败");
-        }
-        return num;
-    }*/
 
     public Integer add(Client client){
         return clientMapper.addClient(client);
@@ -53,7 +32,20 @@ public class ClientServiceImpl implements ClientService {
         return clientMapper.deleteClientByName(id);
     }
 
-
+    //用户名和邮箱登录，获取'数据展示结束日期'。
+    @Override
+    public String[] getDate(String name, String password) {
+        String em = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
+        String[] endDate =new String[2] ;
+        if(name.matches(em)){
+           Client c= clientMapper.getDateByEmail(name,password);
+           endDate= CalendarUtil.getDate(c.getPublishType(),c.getDayOfMonth(),c.getDayOfWeek());
+        }else {
+            Client c1= clientMapper.getDate(name,password);
+            endDate= CalendarUtil.getDate(c1.getPublishType(),c1.getDayOfMonth(),c1.getDayOfWeek());
+        }
+        return  endDate;
+    }
 
     @Override
     public List<Client> findByName(String name) {
