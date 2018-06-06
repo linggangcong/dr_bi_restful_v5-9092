@@ -1,6 +1,7 @@
 package com.spring.controller;
 
 import com.spring.model.Client;
+import com.spring.model.ClientE;
 import com.spring.service.ClientService;
 import com.spring.util.CommonResponse;
 import com.spring.util.ResponseUtil;
@@ -23,6 +24,18 @@ public class ClientController {
     @Resource
     private ClientService clientService;
 
+
+    @PostMapping(value="/add1")
+    @ResponseBody
+    public CommonResponse addClient1(ClientE clientE ){
+        String[] bannerCodeList =clientE.getBannerCodeList();
+
+
+
+
+        int num=clientService.add(clientE.getClient());
+        return ResponseUtil.success(num);
+    }
 
     @PostMapping(value="/add")
     @ResponseBody
@@ -50,6 +63,12 @@ public class ClientController {
     @ResponseBody
     public CommonResponse findByName(@Param("name") String name){
         List<Client> list= clientService.findByName(name);
+        return ResponseUtil.success(list);
+    }
+    @GetMapping(value="/find_all")
+    @ResponseBody
+    public CommonResponse findAll(){
+        List<Client> list= clientService.findAll();
         return ResponseUtil.success(list);
     }
 

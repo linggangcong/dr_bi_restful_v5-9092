@@ -42,12 +42,7 @@
 
     <!--2018180517 管理接口-->
 
-   <!-- <insert id="addClient"   >
-        insert into  dim_client (client_id,role,phonenumber,industry,headshot_image,gender,email_address,
-        idy,banner_code,client_name,company_name,pass_word,end_date,data_date_start,publish_type,day_month,day_week)
-        values(#{id},#{role},#{phoneNum},#{industry},#{headshot},#{gender},#{emailAddress},#{idy},#{bannerCode},#{name},
-        #{companyName},#{password},#{endDate},#{startDataDate},#{publishType},#{dayOfMonth},#{dayOfWeek})
-    </insert>-->
+
 
     <!--设主键,默认值-->
     <insert id="addClient" >
@@ -57,12 +52,7 @@
         #{companyName},#{password},#{endDate},#{startDataDate},#{publishType},#{dayOfMonth},#{dayOfWeek})
     </insert>
 
-    <!--<update id="updateClient" parameterType="com.spring.model.Client"  >
-        update dim_client set  client_id=#{id},role=#{role},phonenumber=#{phoneNum},industry=#{industry},headshot_image=#{headshot},gender=#{gender},
-        email_address=#{emailAddress},idy=#{idy}, banner_code=#{bannerCode},client_name=#{name},company_name=#{companyName},pass_word=#{password},
-        publish_type=#{publishType},end_date=#{endDate}, data_date_start=#{startDataDate}, day_month=#{dayOfMonth}, day_week=#{dayOfWeek}
-        where client_name=#{name}
-    </update>-->
+
 
     <update id="updateClient" parameterType="com.spring.model.Client"  >
         update dim_client set phonenumber=#{phoneNum},industry=#{industry},idy=#{idy}, banner_code=#{bannerCode},
@@ -88,6 +78,10 @@
     <!--<select id="findClientByName" resultMap="baseSelectMap">   &lt;!&ndash; 解决重名&ndash;&gt;-->
         <!--select * from dim_client where client_name=#{name}-->
     <!--</select>-->
+
+    <select id="findAll" resultMap="baseSelectMap">
+    select * from dim_client
+    </select>
 
     <!--登录验证增加日期条件-->
     <select id="validate" resultMap="baseSelectMap" >

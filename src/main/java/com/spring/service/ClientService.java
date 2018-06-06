@@ -18,6 +18,7 @@ public interface ClientService {
    Integer deleteByName(String id);
 
    List<Client> findByName(String name);
+   List<Client> findAll();
 
    Client findById(String id);
 

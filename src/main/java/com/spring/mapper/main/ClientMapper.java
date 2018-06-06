@@ -22,6 +22,7 @@ public interface ClientMapper {
     List<Client> indistinctClient(@Param("name") String clientName, @Param("companyName") String companyName);
     //  BI前端接口
     List<Client> findClientByName(String name);
+    List<Client> findAll();
 
     //返回clientId和Identity.
     Map<String,String> findIdAndIdentity(@Param("clientName") String clientName, @Param("password") String password);
