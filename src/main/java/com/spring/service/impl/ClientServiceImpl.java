@@ -4,7 +4,6 @@ import com.spring.mapper.main.ClientMapper;
 import com.spring.model.Client;
 import com.spring.service.ClientService;
 import com.spring.util.CalendarUtil;
-import com.spring.util.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +18,10 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     ClientMapper clientMapper;
 
-    public Integer add1(Client client){   //接收参数
+   /* public Integer add1(Client client){   //接收参数
         Md5Util.parseStrToMd5L32(client.getPassword());
-
-
         return clientMapper.addClient(client);
-    }
+    }*/
 
     @Override
     public Integer add(Client client){
@@ -146,5 +143,10 @@ public class ClientServiceImpl implements ClientService {
         }else{
             return  clientMapper.findIdBannerIdentity(name, password);
         }
+    }
+
+    @Override
+    public List<Map<String,String>> findDataStatusByName(String clientName) {
+        return  clientMapper.findDataStatusByName(clientName);
     }
 }

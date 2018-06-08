@@ -31,7 +31,7 @@ public class HelloController {
     @PostMapping(value="/login")
     @ResponseBody
     public String login(HttpServletResponse response, @RequestBody Client client) throws IOException {
-
+        //client.setPassword(Md5Util.parseStrToMd5L32(client.getPassword()));    //用户输入的字符串加密，然后验证。
         if(clientService.validate(client)) {                                    //验证用户,确认用户存在于dim_client，返回令牌头字段。 0518日期
             String jwt = JwtUtil.generateToken(client.getName());
             response.setHeader("Access-Control-Allow-Origin", "*");   //根据david添加。

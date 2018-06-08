@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.mapper.main.Client_banner_relMapper">
+
+    <resultMap id="baseSelectMap" type="com.spring.model.Client_banner_rel">
+        <id column="id" property="Id" />
+        <result column="client_id" property="clientId" />
+        <result column="client_name" property="clientName" />
+        <result column="banner_code" property="bannerCode" />
+        <result column="banner_desc" property="bannerDesc" />
+    </resultMap>
+
+    <insert id="addClient_banner_rel"  parameterType="com.spring.model.Client_banner_rel" >
+        insert into  dim_client_banner_rel (client_id,client_name,banner_code,banner_desc) values(null,#{clientName},#{bannerCode},null);
+    </insert>
+
+    <update id="updateClient_banner_rel" parameterType="com.spring.model.Client_banner_rel" >
+    update dim_client_banner_rel set client_id=#{clientId},client_name=#{clientName},banner_code=#{bannerCode},banner_desc=#{bannerDesc} where id=#{Id}
+</update>
+
+    <delete id="deleteClient_banner_relByName" >
+        delete *  from dim_client_banner_rel where client_Name=#{clientName}
+    </delete>
+
+
+
+    <!--<select id="findClient_banner_relByName" resultMap="baseSelectMap">-->
+      <!--select * from dim_client_banner_rel where client_id=#{clientId}-->
+    <!--</select>-->
+
+
+</mapper>

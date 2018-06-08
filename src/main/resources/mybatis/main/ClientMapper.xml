@@ -42,8 +42,6 @@
 
     <!--2018180517 管理接口-->
 
-
-
     <!--设主键,默认值-->
     <insert id="addClient" >
         insert into  dim_client (role,phonenumber,industry,headshot_image,gender,email_address,
@@ -74,10 +72,12 @@
         from dim_client  where client_name like '%${name}%' or  company_name like '%${companyName}%'
     </select>
 
+    <select id="findClientByName" resultMap="baseSelectMap">    <!-- 解决重名-->
+        select * from dim_client where client_name=#{name}
+    </select>
+
     <!--前端接口-->
-    <!--<select id="findClientByName" resultMap="baseSelectMap">   &lt;!&ndash; 解决重名&ndash;&gt;-->
-        <!--select * from dim_client where client_name=#{name}-->
-    <!--</select>-->
+
 
     <select id="findAll" resultMap="baseSelectMap">
     select * from dim_client
@@ -132,6 +132,28 @@
     </select>
     <select id="findIdByEmailBannerIdentity"  resultMap="secMap">
         select data_date_start,end_date ,client_id ,banner_code ,idy  from dim_client where email_address = #{emailAddress} AND pass_word=#{password}
+    </select>
+
+    <!--依据客户名称，返回对应的零售商数据状态-->
+    <select id="findDataStatusByName"  resultType="java.util.HashMap" >
+        SELECT dcbr.banner_code,
+        CASE 0 IN (
+        SELECT
+        status
+        FROM
+        dim_etl_log
+        WHERE
+        create_time &lt;=  CURRENT_DATE
+        AND dim_etl_log.banner_code = dcbr.banner_code
+        )
+        WHEN TRUE THEN
+        0
+        ELSE
+        1  end
+        FROM
+        dim_client_banner_rel dcbr
+        WHERE
+        dcbr.client_name = #{clientName}
     </select>
 
 

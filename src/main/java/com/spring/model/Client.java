@@ -4,7 +4,7 @@ package com.spring.model;
  * Created by SAM on 2017/10/19.
  */
 public class Client {
-    private String  id;
+    private     int  id;
     private  String name;
     private String password;
     private String phoneNum;
@@ -16,13 +16,11 @@ public class Client {
     private  String emailAddress;
     private  String bannerCode;
     private  String idy;
-   // private String startDate;
     private String endDate;
     private String  startDataDate;
     private String  publishType;
     private String  dayOfMonth;
     private String  dayOfWeek;
-    //private String endDataDate;
 
 
     public String getPublishType() {
@@ -49,13 +47,6 @@ public class Client {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -145,7 +136,9 @@ public class Client {
         this.idy = idy;
     }
 
-
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getEndDate() {
         return endDate;

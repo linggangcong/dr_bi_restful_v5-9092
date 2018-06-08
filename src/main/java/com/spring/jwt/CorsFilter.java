@@ -41,7 +41,6 @@ public class CorsFilter implements Filter {
                 System.out.println("not login page and no token ,or username in token is null");
                 //throw new ServletException("Wrong token without username");
                // throw new IOException("Wrong token without username");
-
             }
            // response.sendError(401, "miss token");
         }
@@ -49,8 +48,6 @@ public class CorsFilter implements Filter {
         {
             chain.doFilter(req, res);
         }
-
-
 
     }
 

@@ -14,6 +14,7 @@ public interface UserMapper {
 
 
     Integer updateUser(User user);
+
     Integer updatePwd( String  pwd, Integer userId);
 
     Integer addUser(User user);
@@ -25,6 +26,5 @@ public interface UserMapper {
     User login(@Param("name") String name, @Param("pwd") String pwd);
 
     User validate(User user);
-
 
 }

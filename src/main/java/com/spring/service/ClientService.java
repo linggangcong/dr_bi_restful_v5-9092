@@ -28,8 +28,8 @@ public interface ClientService {
 
    boolean validate(Client client);
 
-
    String findId( String name,  String password);
+
    boolean isDateUseful( String name,  String password);
 
    Map<String,String> findIdAndIdentity( String name,  String password);
@@ -37,4 +37,6 @@ public interface ClientService {
    Map<String,String> findIdBanner(String name, String password);
 
    Client  findIdBannerIdentity(String name, String password);
+
+   List<Map<String,String>> findDataStatusByName(String clientName);
 }

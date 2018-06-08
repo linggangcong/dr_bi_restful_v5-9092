@@ -16,11 +16,14 @@ import java.util.Map;
 public interface ClientMapper {
 
     Integer addClient(Client client);
+
     Integer updateClient(Client client);
+
     Integer deleteClientByName(String id);
     Client findClientById(String id );
+
     List<Client> indistinctClient(@Param("name") String clientName, @Param("companyName") String companyName);
-    //  BI前端接口
+    // BI前端接口
     List<Client> findClientByName(String name);
     List<Client> findAll();
 
@@ -51,6 +54,8 @@ public interface ClientMapper {
     //验证用户登录日期有效
     String isDateUseful(@Param("clientName") String clientName, @Param("password") String password);
     String isDateUsefulByEmail(@Param("emailAddress") String emailAddress, @Param("password") String password);
+
+    List<Map<String,String>> findDataStatusByName(String clientName);
 
 }
 

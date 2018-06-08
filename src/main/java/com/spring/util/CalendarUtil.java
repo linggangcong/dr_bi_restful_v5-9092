@@ -22,7 +22,7 @@ public class CalendarUtil {
     public static String[] getDate(String publishType, String dayMonth, String dayWeek) {    //数据库字段值，数据截至日
         int currentDayWeek = CalendarUtil.getDayOfWeek();
         int currentDayMonth = CalendarUtil.getDayOfMonth();  //今天是本月第几天
-        int dayWeekInt = Integer.parseInt(dayWeek);  //数据库设定值,数据更新日,可看日.
+        int dayWeekInt = Integer.parseInt(dayWeek);  //数据库设定值,数据更新日,可看日.  默认10  5
         int dayMonthInt = Integer.parseInt(dayMonth);
         String[] dayLast = new String[2];
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
