@@ -63,7 +63,7 @@ public class CategoryController {
 
     @RequestMapping(value="/find_by_indistinctName")
     @ResponseBody
-    public CommonResponse findByinDistinctName(@Param("desc") String desc){
+    public CommonResponse findByinDistinctName( String desc){
 
         return ResponseUtil.success(categoryService.findByIndistinctName(desc));
     }

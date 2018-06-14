@@ -37,7 +37,7 @@
 
 
     <select id="findByIndistinctName" resultMap="baseCategorySelect">
-        select *  from dim_product_category where product_category_desc  LIKE  "%${desc}%"
+        select *  from dim_product_category where product_category_desc  LIKE  CONCAT(CONCAT('%', #{desc}), '%')
     </select>
 
     <select id="categoryOfClient" resultType="java.lang.String">

@@ -1,10 +1,11 @@
 package com.spring.mapper.main;
 
 import com.spring.model.Banner;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Mapper
@@ -17,6 +18,9 @@ public interface BannerMapper {
     Integer deleteBannerByName(@Param("name") String banner_name);
 
     Banner getBannerByName(@Param("name")String banner_name);
+
+    List<Banner> findAll();
+
 
 
 }

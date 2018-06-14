@@ -11,7 +11,6 @@
         <result column="phonenumber" property="phoneNum" />
         <result column="company_name" property="companyName" />
         <result column="industry" property="industry" />
-        <!--<result column="headshot_image" property="headshot"  jdbcType="BLOB"  typeHandler="com.spring.model.ConvertBlobTypeHandler" />-->
         <result column="headshot_image" property="headshot"  />
         <result column="gender" property="gender" />
         <result column="email_address" property="emailAddress" />
@@ -23,10 +22,6 @@
         <result column="day_month"  property="dayOfMonth"/>
         <result column="day_week"  property="dayOfWeek"/>
 
-        <!--<result column="start_date" jdbcType="DATE" property="startDate" javaType="java.util.Date" />-->
-        <!--<result column="end_date" jdbcType="DATE" property="startDate" javaType="java.util.Date" />-->
-        <!--<result column="data_date_start" jdbcType="DATE" property="startDataDate" javaType="java.util.Date" />-->
-        <!--<result column="data_date_end" jdbcType="DATE" property="endDataDate" javaType="java.util.Date" />-->
     </resultMap>
 
     <resultMap id="secMap" type="com.spring.model.Client">
@@ -50,13 +45,11 @@
         #{companyName},#{password},#{endDate},#{startDataDate},#{publishType},#{dayOfMonth},#{dayOfWeek})
     </insert>
 
-
-
     <update id="updateClient" parameterType="com.spring.model.Client"  >
         update dim_client set phonenumber=#{phoneNum},industry=#{industry},idy=#{idy}, banner_code=#{bannerCode},
-        company_name=#{companyName},pass_word=#{password},
+        company_name=#{companyName},pass_word=#{password},client_name=#{name},
         publish_type=#{publishType},end_date=#{endDate}, data_date_start=#{startDataDate}, day_month=#{dayOfMonth}, day_week=#{dayOfWeek}
-        where client_name=#{name}
+        where client_id=#{id}
     </update>
 
     <delete id="deleteClientByName" >
@@ -69,7 +62,7 @@
 
     <select id="indistinctClient"  resultMap="baseSelectMap">
         select client_id  ,client_name ,company_name  ,pass_word , role ,industry ,phonenumber,headshot_image ,publish_type,end_date,data_date_start
-        from dim_client  where client_name like '%${name}%' or  company_name like '%${companyName}%'
+        from dim_client  where client_name like CONCAT(CONCAT('%', #{name}), '%')
     </select>
 
     <select id="findClientByName" resultMap="baseSelectMap">    <!-- 解决重名-->

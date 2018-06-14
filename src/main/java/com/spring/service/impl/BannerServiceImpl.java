@@ -1,13 +1,9 @@
 package com.spring.service.impl;
 
 import com.spring.mapper.main.BannerMapper;
-import com.spring.mapper.main.CityMapper;
 import com.spring.model.Banner;
-import com.spring.model.City;
 import com.spring.service.BannerService;
-import com.spring.service.CityService;
 import com.spring.util.ExceptionUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -52,5 +48,8 @@ public class BannerServiceImpl implements BannerService {
         return bannerMapper.getBannerByName(banner_name);
     }
 
-
+    @Override
+    public List<Banner> findAll() {
+        return bannerMapper.findAll();
+    }
 }

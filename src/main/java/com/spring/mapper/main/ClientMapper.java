@@ -22,7 +22,7 @@ public interface ClientMapper {
     Integer deleteClientByName(String id);
     Client findClientById(String id );
 
-    List<Client> indistinctClient(@Param("name") String clientName, @Param("companyName") String companyName);
+    List<Client> indistinctClient(@Param("name") String clientName);
     // BI前端接口
     List<Client> findClientByName(String name);
     List<Client> findAll();

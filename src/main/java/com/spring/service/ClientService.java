@@ -24,7 +24,7 @@ public interface ClientService {
 
    String[] getDate(String name,  String password);
 
-   List<Client> indistinctClient(String name , String companyName);
+   List<Client> indistinctClient(String name);
 
    boolean validate(Client client);
 

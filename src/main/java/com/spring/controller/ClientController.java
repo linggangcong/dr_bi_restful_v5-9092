@@ -177,8 +177,8 @@ public class ClientController {
     }
     @GetMapping(value="/indistinctClient")
     @ResponseBody
-    public CommonResponse findByNameAndCorp(@Param("clientName") String clientName, @Param("companyName") String companyName){
-        List<Client> listClient= clientService.indistinctClient(clientName,companyName);
+    public CommonResponse findByNameAndCorp(@Param("name") String clientName){
+        List<Client> listClient= clientService.indistinctClient(clientName);
         return ResponseUtil.success(listClient);
     }
     //查询用户id。

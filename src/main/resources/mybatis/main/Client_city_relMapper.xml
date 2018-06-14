@@ -7,8 +7,10 @@
         <id column="client_id" property="clientId" />
         <result column="city_id" property="cityId" />
     </resultMap>
-    <insert id="addClient_city_rel"  parameterType="com.spring.model.Client_city_rel" >
 
+
+
+    <insert id="addClient_city_rel"  parameterType="com.spring.model.Client_city_rel" >
         insert into  dim_client_city_rel (client_id,city_id) values(#{clientId},#{cityId});
     </insert>
 

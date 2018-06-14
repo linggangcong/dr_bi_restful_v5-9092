@@ -68,8 +68,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> indistinctClient(String name, String companyName) {
-        return clientMapper.indistinctClient(name,companyName);
+    public List<Client> indistinctClient(String name) {
+        return clientMapper.indistinctClient(name);
     }
 
     @Override

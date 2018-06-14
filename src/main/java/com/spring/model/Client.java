@@ -4,7 +4,7 @@ package com.spring.model;
  * Created by SAM on 2017/10/19.
  */
 public class Client {
-    private     int  id;
+    private     Integer  id;
     private  String name;
     private String password;
     private String phoneNum;
@@ -22,31 +22,13 @@ public class Client {
     private String  dayOfMonth;
     private String  dayOfWeek;
 
-
-    public String getPublishType() {
-        return publishType;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPublishType(String publishType) {
-        this.publishType = publishType;
+    public void setId(Integer id) {
+        this.id = id;
     }
-
-    public String getDayOfMonth() {
-        return dayOfMonth;
-    }
-
-    public void setDayOfMonth(String dayOfMonth) {
-        this.dayOfMonth = dayOfMonth;
-    }
-
-    public String getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(String dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
 
     public String getName() {
         return name;
@@ -136,10 +118,6 @@ public class Client {
         this.idy = idy;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getEndDate() {
         return endDate;
     }
@@ -156,5 +134,27 @@ public class Client {
         this.startDataDate = startDataDate;
     }
 
+    public String getPublishType() {
+        return publishType;
+    }
 
+    public void setPublishType(String publishType) {
+        this.publishType = publishType;
+    }
+
+    public String getDayOfMonth() {
+        return dayOfMonth;
+    }
+
+    public void setDayOfMonth(String dayOfMonth) {
+        this.dayOfMonth = dayOfMonth;
+    }
+
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
 }

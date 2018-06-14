@@ -1,7 +1,6 @@
 package com.spring.service;
 
 import com.spring.model.Banner;
-import com.spring.model.City;
 
 import java.util.List;
 
@@ -17,4 +16,5 @@ public interface BannerService {
     Banner findBannerByName(String banner_name);
 
     Integer deleteBannerByName(String banner_name);
+    List<Banner> findAll();
 }

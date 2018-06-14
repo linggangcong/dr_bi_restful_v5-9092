@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by SAM on 2017/10/9.
@@ -56,4 +57,15 @@ public class BannerController {
         }
         return ResponseUtil.success(banner);
     }
+    @GetMapping(value="/find_all")
+    @ResponseBody
+    public CommonResponse findAll(){
+
+        List<Banner> bannerList = bannerService.findAll();
+        if (bannerList==null) {
+            return ResponseUtil.exception("banner表无数据");
+        }
+        return ResponseUtil.success(bannerList);
+    }
+
 }
