@@ -26,7 +26,7 @@ public class ProvinceController {
     private ProvinceService provinceService;
    
 
-    @PostMapping(value="/add")
+    /*@PostMapping(value="/add")
     @ResponseBody
     public CommonResponse addProvince(@RequestParam("provinceId") int provinceId,@RequestParam("countryId") int countryId,
                                       @RequestParam("districtCode")String districtCode , @RequestParam("provinceCode")String provinceCode,
@@ -55,7 +55,7 @@ public class ProvinceController {
         province.setProvinceName(provinceName);
         int num=provinceService.update(province);
         return ResponseUtil.success(num);
-    }
+    }*/
 
     @DeleteMapping(value="/delete")
     @ResponseBody

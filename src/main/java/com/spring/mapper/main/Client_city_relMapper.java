@@ -13,7 +13,7 @@ public interface Client_city_relMapper {
 
         Integer updateClient_city_rel(Client_city_rel client_city_rel);
 
-        Integer addClient_city_rel(Client_city_rel client_city_rel);
+        Integer addClient_city_rel(Client_city_rel client_city_rel);  //需要
 
         Integer deleteClient_city_relByName(int clientId);
 

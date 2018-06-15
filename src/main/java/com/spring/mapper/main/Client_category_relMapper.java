@@ -17,9 +17,9 @@ public interface Client_category_relMapper {
 
     Integer addClient_category_rel(Client_category_rel client_category_rel);
 
-    Integer deleteClient_category_relByName( int clientId);
+    Integer deleteClient_category_relByName( String clientId);
 
-    List<Client_category_rel> findClient_category_relByName(int clientId);
+    List<Client_category_rel> findClient_category_relByName(String clientId);
 
 }
 

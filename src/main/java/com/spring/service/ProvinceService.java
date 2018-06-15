@@ -26,5 +26,4 @@ public interface ProvinceService {
 
    List<String> provincesOfClient(String clientName);
 
-
 }

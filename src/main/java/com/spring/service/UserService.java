@@ -19,5 +19,8 @@ public interface UserService {
     List<User> findByName(String name);
 
     User login(String name,String pwd);
+
     boolean validate(User user);
+
+    String findId(User user);
 }

@@ -27,4 +27,6 @@ public interface UserMapper {
 
     User validate(User user);
 
+    String findId(User user);
+
 }

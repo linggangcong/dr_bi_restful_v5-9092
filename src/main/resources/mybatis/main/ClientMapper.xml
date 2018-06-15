@@ -70,8 +70,6 @@
     </select>
 
     <!--前端接口-->
-
-
     <select id="findAll" resultMap="baseSelectMap">
     select * from dim_client
     </select>

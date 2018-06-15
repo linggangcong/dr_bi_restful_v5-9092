@@ -6,43 +6,35 @@ import java.util.List;
  * Created by SAM on 2017/10/13.
  */
 public class Province {
-    private int provinceId;
-    private int countryId;
-    private String provinceDistrictCode;
-    private String province;
+    private String countryCode;
+    private String countryId;
+    //private String provinceDistrictCode;
+    private String province_code;
     private String provinceName;
     private List<City> cities;
 
-    public int getProvinceId() {
-        return provinceId;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setProvinceId(int provinceId) {
-        this.provinceId = provinceId;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
-    public int getCountryId() {
+    public String getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(int countryId) {
+    public void setCountryId(String countryId) {
         this.countryId = countryId;
     }
 
-    public String getProvinceDistrictCode() {
-        return provinceDistrictCode;
+    public String getProvince_code() {
+        return province_code;
     }
 
-    public void setProvinceDistrictCode(String provinceDistrictCode) {
-        this.provinceDistrictCode = provinceDistrictCode;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
+    public void setProvince_code(String province_code) {
+        this.province_code = province_code;
     }
 
     public String getProvinceName() {
@@ -51,5 +43,13 @@ public class Province {
 
     public void setProvinceName(String provinceName) {
         this.provinceName = provinceName;
+    }
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
     }
 }

@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 public class Client_city_relServiceImpl implements Client_city_relService {
     @Autowired
     Client_city_relMapper client_city_relMapper;
+
     @Override
     public Integer  addClient_city_rel(Client_city_rel client_city_rel){
         return client_city_relMapper.addClient_city_rel(client_city_rel);
-
     }
 
     @Override

@@ -39,4 +39,9 @@
     <select id="validate" resultMap="baseSelectMap" >--      管理用户登录
         select * from dim_user where name=#{name} and pwd=#{pwd}
     </select>
+
+    <select id="findId" resultType="java.lang.String"  >--      查询id
+        select id from dim_user where name=#{name} and pwd=#{pwd}
+    </select>
+
 </mapper>

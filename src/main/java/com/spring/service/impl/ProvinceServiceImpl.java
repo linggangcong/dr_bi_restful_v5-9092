@@ -17,6 +17,7 @@ import java.util.Map;
 public class ProvinceServiceImpl implements ProvinceService {
     @Autowired
     ProvinceMapper provinceMapper;
+
     @Override
     public Integer  addProvince(Province province){
         Integer num=provinceMapper.addProvince(province);

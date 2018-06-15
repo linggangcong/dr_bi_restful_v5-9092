@@ -35,7 +35,7 @@
     </select>
 
     <select id="findAllName" resultType="Map">
-        select province ,province_name as provinceName from dim_province
+        select province_code ,province_name as provinceName from dim_province
     </select>
 
     <select id="citiesInProvince" resultMap="baseSelectMap">

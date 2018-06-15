@@ -15,9 +15,9 @@ public interface Client_category_relService {
 
    Integer update(Client_category_rel client_category_rel);
 
-   Integer deleteByName(int clientId);
+   Integer deleteByName(String clientId);
 
-   List<Client_category_rel > findByName(int clientId);
+   List<Client_category_rel > findByName(String clientId);
 
 
 }

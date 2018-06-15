@@ -39,13 +39,20 @@ public class CalendarUtil {
                 cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
                 dayLast[0] = sdf.format(cal.getTime());
             }
-            int temp = cal.get(Calendar.DAY_OF_MONTH);  //星期最近日是当月第几天
+            /*int temp = cal.get(Calendar.DAY_OF_MONTH);  //星期最近日是当月第几天
             if (temp <=dayMonthInt) {
                 cal.add(Calendar.MONTH, -2);
                 dayLast[1] = CalendarUtil.getLastMonthDay(cal); //当月最后一天
             } else {
                 cal.add(Calendar.MONTH, -1);
                 dayLast[1] = CalendarUtil.getLastMonthDay(cal); //当月最后一天
+            }*/
+            if (currentDayMonth <= dayMonthInt) {           //当天在11号之前
+                cal.add(Calendar.MONTH, -2);
+                dayLast[1] = CalendarUtil.getLastMonthDay(cal);
+            } else {
+                cal.add(Calendar.MONTH, -1);
+                dayLast[1] = CalendarUtil.getLastMonthDay(cal);   //函数用错了。当前月的最后一天。
             }
         }else if (publishType.equalsIgnoreCase("month")){
             if (currentDayMonth <= dayMonthInt) {                              //当天在11号之前

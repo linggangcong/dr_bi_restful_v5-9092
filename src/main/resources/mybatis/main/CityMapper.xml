@@ -30,7 +30,7 @@
     </select>
 
     <select id="citiesInProvince" parameterType="java.lang.String" resultMap="basicMap" >
-        SELECT c.city_name ,c.city_id FROM  dim_province p ,dim_city c where p.province_id= c.province_id and p.province=#{name}
+        SELECT c.city_name ,c.city_id FROM  dim_province p ,dim_city c where p.province_code= c.province_id and p.province_code=#{name}
     </select>
 
 

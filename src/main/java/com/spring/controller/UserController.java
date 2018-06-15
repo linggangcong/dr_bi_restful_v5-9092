@@ -70,6 +70,12 @@ public class UserController {
             return ResponseUtil.success("false");
         }
     }
+    @GetMapping(value="/find_id")
+    @ResponseBody
+    public CommonResponse findId(User user){
+        String id = userService.findId(user);
+        return ResponseUtil.success(id);
+    }
 
 
 }

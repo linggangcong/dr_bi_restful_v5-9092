@@ -4,11 +4,10 @@
 <mapper namespace="com.spring.mapper.main.Client_city_relMapper">
 
     <resultMap id="baseSelectMap" type="com.spring.model.Client_city_rel">
-        <id column="client_id" property="clientId" />
+        <id column="id" property="id" />
+        <result column="client_id" property="clientId" />
         <result column="city_id" property="cityId" />
     </resultMap>
-
-
 
     <insert id="addClient_city_rel"  parameterType="com.spring.model.Client_city_rel" >
         insert into  dim_client_city_rel (client_id,city_id) values(#{clientId},#{cityId});

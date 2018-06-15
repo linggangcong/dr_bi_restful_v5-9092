@@ -6,12 +6,13 @@
     <resultMap id="baseSelectMap" type="com.spring.model.Client_category_rel">
         <id column="client_id" property="clientId" />
         <result column="category_code" property="categoryCode" />
-</resultMap>
+    </resultMap>
 
     <insert id="addClient_category_rel"  parameterType="com.spring.model.Client_category_rel" >
-
+--         delete from dim_client_category_rel where client_id=#{clientId}
         insert into  dim_client_category_rel (client_id,category_code) values(#{clientId},#{categoryCode});
     </insert>
+
 
     <update id="updateClient_category_rel" parameterType="com.spring.model.Client_category_rel" >
         update dim_client_category_rel set category_code=#{categoryCode}

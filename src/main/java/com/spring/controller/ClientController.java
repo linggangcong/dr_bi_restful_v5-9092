@@ -33,10 +33,8 @@ public class ClientController {
     @PostMapping(value="/add")
     @ResponseBody
     public CommonResponse addClient(HttpServletRequest request){
-
         String bannerCode =request.getParameter("bannerCodeList");     //传入的客户对应的全部零售商
         String[] bannerCodeList=bannerCode.split(",");
-
         Client_banner_rel client_banner_rel=new Client_banner_rel();
         Client client=new Client();           //包含加密的过程。
         //client.setPassword(Md5Util.parseStrToMd5L32(request.getParameter("password")));
